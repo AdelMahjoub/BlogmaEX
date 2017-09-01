@@ -1,0 +1,100 @@
+<% include ../inc/header %>
+
+<!-- main content container -->
+<div class="main" style="padding: 5px;">
+  <div class="container-fluid">
+    <!-- Navigation -->
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li>
+          <a href="/">
+            <span class="icon is-small">
+              <i class="fa fa-home"></i>
+            </span>
+            <span>Home</span>
+          </a>
+        </li>
+        <li>
+          <a href="/dashboard">
+            <span class="icon is-small">
+              <i class="fa fa-tachometer"></i>
+            </span>
+            <span>Dashboard</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <!-- Article Form -->
+    <form action="/edit" method="POST">
+      <hr>
+      <div class="columns">
+        <div class="column is-6">
+          <div class="field">
+            <label for="title" class="label">Title</label>
+            <div class="control">
+              <input 
+                id="title"
+                type="text" 
+                class="input" 
+                name="title"
+                placeholder="Article title"
+                value="<%= article['title'] %>"
+                autofocus>
+            </div>
+          </div>
+        </div>
+        <div class="column is-3">
+          <div class="field">
+            <label class="label">
+              <%= article['id'] ? ('Article id: ' + article['id']) : 'New Article'; %>
+            </label>
+             <input 
+                id="id"
+                type="text" 
+                class="is-hidden" 
+                name="id"
+                value="<%= article['id'] %>">
+          </div>
+        </div>
+        <div class="column is-3">
+          <div class="control">
+            <button
+            class="button is-primary is-pulled-right" 
+            type="submit">Save</button>
+          </div>
+        </div>
+      </div>
+      <!-- Errors notifications -->
+      <p class="field">
+        <% if(errors && errors.length > 0) { %>
+          <% errors.forEach(function(error) { %>
+            <%- Message.notify({ color: 'danger', message: error }) %>
+          <% }); %>
+        <% } %>
+      </p>
+      <hr>
+      <div class="columns">
+        <div class="column is-6">
+          <div class="field">
+            <div class="control">
+              <textarea 
+              class="textarea" 
+              name="content" 
+              id="markdown" 
+              cols="30" 
+              rows="10" 
+              placeholder="Article Markdown"><%- article['content'] %></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="column is-6">
+          <div 
+            class="content" 
+            id="preview"></div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div><!-- end of main content container -->
+<script src="/js/edit.js"></script>
+<% include ../inc/footer %>

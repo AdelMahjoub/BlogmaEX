@@ -1,0 +1,61 @@
+<% include ../inc/header %>
+<% include ../inc/navbar %>
+
+<!-- main content container -->
+<div class="main">
+  <div class="container">
+    <p class="field">
+      <a href="/edit" class="button is-outlined is-success">
+        <span class="icon is-small">
+          <i class="fa fa-plus"></i>
+        </span>
+        <span>New Article</span>
+      </a>
+    </p>
+    <!-- Notifications -->
+    <p class="field">
+      <% if(infos && infos.length > 0) { %>
+        <% infos.forEach(function(info) { %>
+          <%- Message.notify({ color: 'primary', message: info }) %>
+        <% }); %>
+      <% } %>
+      <% if(errors && errors.length > 0) { %>
+        <% errors.forEach(function(error) { %>
+          <%- Message.notify({ color: 'danger', message: error }) %>
+        <% }); %>
+      <% } %>
+    </p>
+    <div class="field">
+      <% if(articles && articles.length > 0) { %>
+        <table class="table is-striped">
+          <thead>
+          <tr>
+            <th>id</th>
+            <th>post date</th>
+            <th>title</th>
+          </tr>
+          </thead>
+          <tbody>
+          <% articles.forEach(function(article) { %>
+            <tr>
+              <td><%= article.id %></td>
+              <td><%= (new Date(article.postDate)).toLocaleDateString() %></td>
+              <td><%= article.title%></td>
+              <td>
+                <a href="/edit/<%= article.id %>">edit</a>
+              </td>
+              <td>
+                <a
+                class="has-text-danger" 
+                href="/delete/<%= article.id %>">delete</a>
+              </td>
+            </tr>
+          <% }); %>
+          </tbody>
+        </table>
+      <% } %>
+    </div>
+  </div>
+</div><!-- end of main content container -->
+
+<% include ../inc/footer %>

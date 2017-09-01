@@ -1,0 +1,38 @@
+<% include ../inc/header %>
+<% include ../inc/navbar %>
+
+<!-- main content container -->
+<div class="main">
+  <div class="container">
+    <div class="columns is-multiline">
+      <div class="column is-8 is-offset-2">
+        <!-- Notifications -->
+        <p class="field">
+          <% if(infos && infos.length > 0) { %>
+            <% infos.forEach(function(info) { %>
+              <%- Message.notify({ color: 'primary', message: info }) %>
+            <% }); %>
+          <% } %>
+          <% if(errors && errors.length > 0) { %>
+            <% errors.forEach(function(error) { %>
+              <%- Message.notify({ color: 'danger', message: error }) %>
+            <% }); %>
+          <% } %>
+        </p>
+      </div>
+      <% if(articles && articles.length > 0) { %>
+        <% articles.forEach(function(article, index) { %>
+          <div class="column is-8 is-offset-2">
+            <div class="box is-clearfix">
+              <a href="/articles/<%= article.id %>">
+                <h2 class="is-title is-size-5"><%= article.title %></h2>
+              </a>
+              <small class="is-pulled-right"><%= (new Date(article.postDate)).toLocaleDateString(); %></small>
+            </div>
+          </div>
+        <% }); %>
+      <% } %>
+    </div>
+  </div>
+</div><!-- end of main content container -->
+<% include ../inc/footer %>

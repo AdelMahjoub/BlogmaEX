@@ -1,0 +1,33 @@
+<% include ../inc/header %>
+<% include ../inc/navbar %>
+
+<!-- main content container -->
+<div class="main">
+  <textarea 
+    id="markdown" 
+    class="is-hidden"><%- article.content %></textarea>
+  <div class="container">
+    <div
+    id="content" 
+    class="content section"></div>
+  </div>
+</div><!-- end of main content container -->
+<script>
+  marked.setOptions({
+    renderer: new marked.Renderer(),
+    gfm: true,
+    tables: true,
+    breaks: false,
+    pedantic: false,
+    sanitize: true,
+    smartLists: true,
+    smartypants: false,
+    highlight: function(code) {
+      return hljs.highlightAuto(code).value
+    }
+  });
+  var markdown = document.querySelector('#markdown');
+  var content = document.querySelector('#content');
+  content.innerHTML = marked(markdown.value);
+</script>
+<% include ../inc/footer %>
