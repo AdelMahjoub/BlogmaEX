@@ -1,6 +1,6 @@
 require('dotenv').config();
 require('./configs/passport-google.config')();
-require('./configs/passport-local.config.js')();
+require('./configs/passport-local.config')();
 
 const express     = require('express');
 const session     = require('express-session');
@@ -27,7 +27,7 @@ app.use(session(require('./configs/session.config')));
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(compression(require('./configs/compression.config')));
+app.use(compression());
 app.use(minifyHtml(require('./configs/html-minify.config')));
 app.use(minify({
   cache: path.join(__dirname, 'cache')

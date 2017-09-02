@@ -40,7 +40,7 @@
             <tr>
               <td><%= article.id %></td>
               <td><%= (new Date(article.postDate)).toLocaleDateString() %></td>
-              <td><%= article.title%></td>
+              <td><%- article.title%></td>
               <td>
                 <a href="/edit/<%= article.id %>">edit</a>
               </td>

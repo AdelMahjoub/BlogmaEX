@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const router = express.Router();
 
 const Article = require('../models/article.model');
+const AuthGuard = require('../class/AuthGuard');
 
 const authRoutes = require('./authentication');
 const articlesManagementRoutes = require('./articles-management');
@@ -41,6 +42,19 @@ router.route('/articles/:id')
     } else {
       return res.redirect('/');
     }
+  });
+
+router.route('/comment/:articleId')
+  .post(
+    AuthGuard.loginRequired, 
+    (req, res, next) => {
+    let articleId = parseInt(req.params['articleId']);
+    if(isNaN(articleId)) {
+      req.flash('error', ['Article not found']);
+      return res.redirect('index');
+    }
+    req.flash('info', ['Comment submitted with success']);
+    return res.redirect('/articles/' + articleId);
   });
 
 router.use('*', (req, res, next) => {

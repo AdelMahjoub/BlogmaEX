@@ -6,12 +6,59 @@
   <textarea 
     id="markdown" 
     class="is-hidden"><%- article.content %></textarea>
+
   <div class="container">
-    <div
-    id="content" 
-    class="content section"></div>
+
+    <!-- Ads section -->
+    <div class="hero">
+      <div class="section"></div>
+    </div><!-- end of ads -->
+    
+    <!-- Notifications -->
+    <p class="field">
+      <% if(infos && infos.length > 0) { %>
+        <% infos.forEach(function(info) { %>
+          <%- Message.notify({ color: 'primary', message: info }) %>
+        <% }); %>
+      <% } %>
+      <% if(errors && errors.length > 0) { %>
+        <% errors.forEach(function(error) { %>
+          <%- Message.notify({ color: 'danger', message: error }) %>
+        <% }); %>
+      <% } %>
+    </p>
+
+    <!-- Article -->
+    <div id="article">
+      <h1 class="title is-size-4"><%- article.title %></h1>
+      <br>
+      <div
+      id="content" 
+      class="content"></div>
+      <br>
+    </div>
+    <hr>
+
+    <!-- Comment Form -->
+    <form action="/comment/<%= article.id %>" method="POST">
+      <div class="field">
+        <label class="label">Comment or ask questions</label>
+        <textarea 
+        name="comment" 
+        cols="30" 
+        rows="10" 
+        class="textarea" 
+        placeholder="Markdown"></textarea>
+      </div>
+      <div class="field is-clearfix">
+        <button 
+        type="submit"
+        class="button is-primary is-pulled-right">Submit</button>
+      </div>
+    </form>
   </div>
 </div><!-- end of main content container -->
+
 <script>
   marked.setOptions({
     renderer: new marked.Renderer(),
@@ -30,4 +77,5 @@
   var content = document.querySelector('#content');
   content.innerHTML = marked(markdown.value);
 </script>
+
 <% include ../inc/footer %>
